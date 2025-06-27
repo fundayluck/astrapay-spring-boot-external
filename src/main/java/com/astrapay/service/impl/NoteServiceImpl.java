@@ -18,8 +18,8 @@ public class NoteServiceImpl implements NoteService {
     private final NoteRepository noteRepository;
 
     @Override
-    public List<Note> getAllNotes() {
-        return noteRepository.findAll();
+    public List<Note> getAllNotes(int page, int size, String sort) {
+        return noteRepository.findAll(page, size, sort);
     }
 
     @Override
@@ -41,5 +41,10 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Optional<Note> getNoteById(UUID id) {
         return noteRepository.findById(id);
+    }
+
+    @Override
+    public long getTotalNotes() {
+        return noteRepository.count();
     }
 }

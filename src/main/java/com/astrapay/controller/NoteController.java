@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.astrapay.dto.PaginatedResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,26 @@ public class NoteController {
     private final NoteService noteService;
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        List<Note> notes = noteService.getAllNotes();
-        log.info("notes={}", notes);
-        return ResponseHandler.generateResponse("success retrieve notes", HttpStatus.OK, noteService.getAllNotes());
+    public ResponseEntity<?> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "newest") String sort) {
+        List<Note> notes = noteService.getAllNotes(page, size, sort);
+        long totalItems = noteService.getTotalNotes();
+        int totalPages = (int) Math.ceil((double) totalItems / size);
+
+        PaginatedResponse<Note> response = new PaginatedResponse<>(
+                notes,
+                page,
+                size,
+                totalItems,
+                totalPages,
+                true,
+                "success retrieve notes",
+                200
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
