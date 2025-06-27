@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 class ExampleAdvice {
-    @ResponseStatus(HttpStatus.CONFLICT)  // 409
-    @ExceptionHandler(Exception.class)
-    public void handleConflict() {
-        // Nothing to do
-    }
+//    @ResponseStatus(HttpStatus.CONFLICT)  // 409
+//    @ExceptionHandler(Exception.class)
+//    public void handleConflict() {
+//        // Nothing to do
+//    }
 }
