@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -12,4 +13,6 @@ import java.util.UUID;
 public class Note {
     private UUID id;
     private String content;
+
+    private LocalDateTime createdAt;
 }

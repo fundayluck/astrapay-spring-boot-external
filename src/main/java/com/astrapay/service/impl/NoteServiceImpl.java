@@ -7,6 +7,7 @@ import com.astrapay.service.NoteService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,8 +24,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note addNote(String content) {
+        LocalDateTime now = LocalDateTime.now();
         UUID id = UUID.randomUUID();
-        Note note = new Note(id, content);
+        Note note = new Note(id, content, now);
         return noteRepository.save(note);
     }
 
