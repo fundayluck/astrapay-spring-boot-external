@@ -26,16 +26,18 @@ public class NoteController {
 
     @GetMapping
     public ResponseEntity<?> getAll(
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "newest") String sort) {
-        List<Note> notes = noteService.getAllNotes(page, size, sort);
+        int pageIndex = page - 1;
+        if (pageIndex < 0) pageIndex = 0;
+        List<Note> notes = noteService.getAllNotes(pageIndex, size, sort);
         long totalItems = noteService.getTotalNotes();
         int totalPages = (int) Math.ceil((double) totalItems / size);
 
         PaginatedResponse<Note> response = new PaginatedResponse<>(
                 notes,
-                page,
+                pageIndex + 1   ,
                 size,
                 totalItems,
                 totalPages,
